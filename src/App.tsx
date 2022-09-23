@@ -1,29 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import InputField from './Components/InputField';
+import Todo from './model'
 
-let name: string = "leo"
-let age: number = 5
-let isStudent: boolean = false;
-let hobbies: string[];
-let role: [number, string];
+const App: React.FC = () => {
 
-role = [5, "lucky"]
+  const [todo, setTodo] = useState<string>("")
+  const [todos, setTodos] = useState<Todo[]>([])
 
-type Person = {
-  name: string;
-  age: number;
-}
+  const handleAdd = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (todo) {
+      setTodos([...todos, { id: Date.now(), todo: todo, isDone: false }])
+      setTodo("")
+    } else {
+    }
+  }
 
-let person: Person = {
-  name: "leo",
-  age: 5
-}
+  console.log(todos)
 
-
-function App() {
   return (
     <div className="App">
-      <p>Hello world</p>
+      <span className="heading">
+        Taskify
+      </span>
+      <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
+      {todos.map(value => (
+        <div>{value.todo}</div>
+      ))}
     </div>
   );
 }
